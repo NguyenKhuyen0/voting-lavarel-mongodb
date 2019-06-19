@@ -37,12 +37,17 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
+        
+        var_dump($request);
+        die();
         $option= new Option();
+        $option->image = $request->get('image');
+        $option->extra_images = $request->get('extra_images');
         $option->content = $request->get('content');
         $option->votes = $request->get('votes');       
         $option->save();
 
-        return redirect('option.result')->with('success', 'Optionhas been successfully added');
+        return redirect('option.result')->with('success', 'Option has been successfully added');
     }
 
     /**
@@ -80,6 +85,8 @@ class OptionController extends Controller
     public function update(Request $request, $id)
     {
         $option= Option::find($id);
+        $option->image = $request->get('image');
+        $option->extra_images = $request->get('extra_images');
         $option->content = $request->get('content');
         $option->votes = $request->get('votes');       
         $option->save();

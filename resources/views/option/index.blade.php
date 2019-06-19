@@ -33,9 +33,9 @@
         <td>{{$option->optioncompany}}</td>
         <td>{{$option->model}}</td>
         <td>{{$option->price}}</td>
-        <td><a href="{{action('optionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
+        <td><a href="{{action('OptionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
         <td>
-          <form action="{{action('optionController@destroy', $option->id)}}" method="post">
+          <form action="{{action('OptionController@destroy', $option->id)}}" method="post">
             @csrf
             <input name="_method" type="hidden" value="DELETE">
             <button class="btn btn-danger" type="submit">Delete</button>

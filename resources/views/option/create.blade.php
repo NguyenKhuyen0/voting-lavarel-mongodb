@@ -15,33 +15,40 @@
       <h2>Laravel MongoDB CRUD Tutorial With Example</h2><br/>
       <div class="container">
     </div>
-      <form method="post" action="{{url('add')}}">
+      <form method="post" action="{{url('option/add')}}">
         @csrf
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="optioncompany">option Company:</label>
-            <input type="text" class="form-control" name="optioncompany">
+            <label for="image">Option Image:</label>
+            <input type="file" class="form-control" name="image" accept="image/*">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Model">Model:</label>
-            <input type="text" class="form-control" name="model">
+            <label for="extra_images">Option Extra Images:</label>
+            <input type="file" class="form-control" name="extra_images[]" accept="image/*">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Price">Price:</label>
-            <input type="text" class="form-control" name="price">
+            <label for="content">Option Content:</label>
+            <input type="text" class="form-control" name="content">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <label for="votes">Option Votes:</label>
+            <input type="text" class="form-control" name="votes">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="form-group col-md-4">
+            <button type="submit" class="btn btn-success">Update</button>
           </div>
         </div>
       </form>

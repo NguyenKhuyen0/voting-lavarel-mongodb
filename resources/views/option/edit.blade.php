@@ -15,29 +15,37 @@
       <h2>Edit A Form</h2><br/>
       <div class="container">
     </div>
-      <form method="post" action="{{action('optionController@update', $id)}}">
+      <form method="post" action="{{action('OptionController@update', $id)}}">
         @csrf
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="optioncompany">option Company:</label>
-            <input type="text" class="form-control" name="optioncompany" value="{{$option->optioncompany}}">
+            <label for="image">Option Image:</label>
+            <input type="text" class="form-control" name="image" value="{{$option->image}}">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Model">Model:</label>
-            <input type="text" class="form-control" name="model" value="{{$option->model}}">
+            <label for="extra_images">Option Extra Images:</label>
+            <input type="text" class="form-control" name="extra_images" value="{{$option->extra_images}}">
           </div>
         </div>
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="Price">Price:</label>
-            <input type="text" class="form-control" name="price" value="{{$option->price}}">
+            <label for="content">Option Content:</label>
+            <input type="text" class="form-control" name="content" value="{{$option->content}}">
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="form-group col-md-4">
+            <label for="votes">Option Votes:</label>
+            <input type="text" class="form-control" name="votes " value="{{$option->image}}">
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-md-4"></div>
           <div class="form-group col-md-4">

@@ -11,7 +11,9 @@ class Option extends Eloquent
     protected $connection = 'mongodb';
     protected $collection = 'options';
 
-
+    protected $fillable = [
+         'image', 'extra_images', 'content', 'votes'
+    ];
 
     public function question()
     {

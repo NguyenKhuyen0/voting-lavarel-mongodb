@@ -30,3 +30,10 @@ Route::get('admin', function () {
 
 // Voting
 Route::get('option','OptionController@create');
+
+Route::get('option/add','OptionController@create');
+// Route::post('option/add','OptionController@store');
+Route::get('option','OptionController@index');
+Route::get('option/edit/{id}','OptionController@edit');
+Route::post('option/edit/{id}','OptionController@update');
+Route::delete('option/{id}','OptionController@destroy');
