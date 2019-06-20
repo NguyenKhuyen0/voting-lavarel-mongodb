@@ -38,16 +38,46 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         
-        var_dump($request);
-        die();
+
+        $extra_images = [];
+        $image = '';
+        request()->validate([
+ 
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'extra_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+ 
+        ]);
+ 
+        
+        if($request->hasfile('extra_images'))
+        {
+
+            foreach($request->file('extra_images') as $img)
+            {
+                $name=$img->getClientOriginalName();
+                $img->move(public_path().'/images/', $name);  
+                $extra_images[] = $name;  
+            }
+
+        }
+
+        if($request->hasfile('image'))
+        {
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move(public_path().'/images/', $name);  
+            $image = $name;  
+        }
+     
+
         $option= new Option();
-        $option->image = $request->get('image');
-        $option->extra_images = $request->get('extra_images');
+        $option->image = $image;
+        $option->extra_images =  $extra_images;
         $option->content = $request->get('content');
         $option->votes = $request->get('votes');       
         $option->save();
 
-        return redirect('option.result')->with('success', 'Option has been successfully added');
+        return redirect('option.index')->with('success', 'Option has been successfully added');
     }
 
     /**
@@ -104,6 +134,6 @@ class OptionController extends Controller
     {
         $option = Option::find($id);
         $option->delete();
-        return redirect('option.single')->with('success','option has been  deleted');
+        return redirect('option.index')->with('success','option has been  deleted');
     }
 }
