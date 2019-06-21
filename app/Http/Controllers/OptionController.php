@@ -79,7 +79,7 @@ class OptionController extends Controller
         $option->votes = $request->get('votes');       
         $option->save();
 
-        return redirect('option.index')->with('success', 'Option has been successfully added');
+        return redirect('option')->with('success', 'Option has been successfully added');
     }
 
     /**
@@ -168,6 +168,6 @@ class OptionController extends Controller
     {
         $option = Option::find($id);
         $option->delete();
-        return redirect('option.index')->with('success','option has been  deleted');
+        return redirect('option')->with('success','option has been  deleted');
     }
 }

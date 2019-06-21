@@ -29,7 +29,7 @@ Route::get('admin', function () {
 });
 
 // Voting
-Route::get('option','OptionController@create');
+
 
 Route::get('option/add','OptionController@create');
 Route::post('option/add','OptionController@store');
