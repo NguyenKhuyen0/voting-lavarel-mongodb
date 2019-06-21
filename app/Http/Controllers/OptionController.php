@@ -39,24 +39,25 @@ class OptionController extends Controller
     {
         
 
-        $extra_images = [];
         $image = '';
+        $gallery = [];
+        
         request()->validate([
  
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            'extra_images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
  
         ]);
  
         
-        if($request->hasfile('extra_images'))
+        if($request->hasfile('gallery'))
         {
 
-            foreach($request->file('extra_images') as $img)
+            foreach($request->file('gallery') as $img)
             {
                 $name=$img->getClientOriginalName();
                 $img->move(public_path().'/images/', $name);  
-                $extra_images[] = $name;  
+                $gallery []= $name;  
             }
 
         }
@@ -71,9 +72,10 @@ class OptionController extends Controller
      
 
         $option= new Option();
-        $option->image = $image;
-        $option->extra_images =  $extra_images;
+        $option->title = $request->get('title');
         $option->content = $request->get('content');
+        $option->image = $image;
+        $option->gallery =  $gallery;
         $option->votes = $request->get('votes');       
         $option->save();
 
@@ -114,10 +116,42 @@ class OptionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $image = '';
+        $gallery = [];
+        
+        request()->validate([
+ 
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+ 
+        ]);
+ 
+        
+        if($request->hasfile('gallery'))
+        {
+
+            foreach($request->file('gallery') as $img)
+            {
+                $name=$img->getClientOriginalName();
+                $img->move(public_path().'/images/', $name);  
+                $gallery[] = $name;  
+            }
+
+        }
+
+        if($request->hasfile('image'))
+        {
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move(public_path().'/images/', $name);  
+            $image = $name;  
+        }
+
         $option= Option::find($id);
-        $option->image = $request->get('image');
-        $option->extra_images = $request->get('extra_images');
+        $option->title = $request->get('title');
         $option->content = $request->get('content');
+        $option->image = $image;
+        $option->gallery =  $gallery;
         $option->votes = $request->get('votes');       
         $option->save();
 

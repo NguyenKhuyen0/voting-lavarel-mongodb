@@ -19,9 +19,10 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
         <th>image</th>
         <th>Galary</th>
-        <th>content</th>
         <th colspan="2">votes</th>
       </tr>
     </thead>
@@ -30,16 +31,18 @@
       @foreach($options as $option)
       <tr>
         <td>{{$option->id}}</td>
+        <td>{{$option->title}}</td>
+        <td>{{$option->content}}</td>
         <td><img src="{{url('/images/'.$option->image)}}" width="50px"></td>
         <td>
-        @if ($option->extra_images)
-        @foreach ($option->extra_images as $img)
+        @if ($option->gallery)
+        @foreach ($option->gallery as $img)
         <img src="{{url('/images/'.$img)}}" width="50px">
         @endforeach
         @endif
         
         </td>
-        <td>{{$option->content}}</td>
+
         <td>{{$option->votes}}</td>
         <td><a href="{{action('OptionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
         <td>

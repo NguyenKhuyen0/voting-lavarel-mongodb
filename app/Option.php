@@ -12,7 +12,7 @@ class Option extends Eloquent
     protected $collection = 'options';
 
     protected $fillable = [
-         'image', 'extra_images', 'content', 'votes'
+         'title', 'content', 'image', 'gallery', 'votes'
     ];
 
     public function question()
