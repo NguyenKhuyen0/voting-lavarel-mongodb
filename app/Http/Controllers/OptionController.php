@@ -42,25 +42,24 @@ class OptionController extends Controller
         $image = '';
         $gallery = [];
         
-        request()->validate([
+        // $request->validate([
  
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+        //     'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        //     'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
  
-        ]);
+        // ]);
  
         
         if($request->hasfile('gallery'))
         {
-
             foreach($request->file('gallery') as $img)
             {
                 $name=$img->getClientOriginalName();
                 $img->move(public_path().'/images/', $name);  
                 $gallery []= $name;  
             }
-
         }
+   
 
         if($request->hasfile('image'))
         {
@@ -119,25 +118,23 @@ class OptionController extends Controller
         $image = '';
         $gallery = [];
         
-        request()->validate([
+        // $request->validate([
  
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+        //     'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        //     'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
  
-        ]);
- 
-        
+        // ]);
+
         if($request->hasfile('gallery'))
         {
-
             foreach($request->file('gallery') as $img)
             {
                 $name=$img->getClientOriginalName();
                 $img->move(public_path().'/images/', $name);  
-                $gallery[] = $name;  
+                $gallery []= $name;  
             }
-
         }
+   
 
         if($request->hasfile('image'))
         {
@@ -146,16 +143,23 @@ class OptionController extends Controller
             $img->move(public_path().'/images/', $name);  
             $image = $name;  
         }
+     
 
         $option= Option::find($id);
         $option->title = $request->get('title');
         $option->content = $request->get('content');
-        $option->image = $image;
-        $option->gallery =  $gallery;
+        if($image)
+        {
+            $option->image = $image;
+        }
+        if($gallery)
+        {
+            $option->gallery =  $gallery;
+        }
         $option->votes = $request->get('votes');       
         $option->save();
 
-        return redirect('option.single')->with('success', 'Option has been successfully update');
+        return redirect('option')->with('success', 'Option has been successfully added');
     }
 
     /**

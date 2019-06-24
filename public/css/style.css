@@ -87,4 +87,16 @@
     margin-top: 15px;
     color: #fff;
   }
-  
+  .bg-colorf1f7fc
+  {
+    background-color: #f1f7fc;
+  }
+  .pd-80px0
+  {
+    padding: 80px 0;
+  }
+.bd-ced4da
+{
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+  border: 1px solid #ced4da;
+}

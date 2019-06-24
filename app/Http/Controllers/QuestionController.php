@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Option;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -14,7 +15,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions= Question::all();
+        $options = Option::all();
+        return view('question.index',compact('options'));
     }
 
     /**
@@ -24,7 +27,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view('question.create');
     }
 
     /**
@@ -35,7 +39,30 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $options = \App\Option::all();
+        $question= new Question();
+        $question->title = $request->get('title');
+        $options = [];
+        if($request->ids)
+        {
+            $ids = json_decode($question->ids);
+            foreach($ids as $id)
+            {
+
+                $option =  Option::where('_id', 'LIKE', $id.'%')
+                ->get();
+                var_dump('aaaaa');
+                die();
+                
+                $options []= $option;
+               
+            }
+        }
+        $question->options()->saveMany($options);
+
+        $question->save();
+
+        return redirect('question')->with('success', 'Question has been successfully added');
     }
 
     /**
@@ -81,5 +108,45 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        // search
+
+        // if($request->ajax()) {
+            // select country name from database
+            $data = Option::where('title', 'LIKE', $request->title.'%')
+                ->get();
+            // declare an empty array for output
+            $output = '';
+            // if searched countries count is larager than zero
+            if (count($data)>0) {
+                // concatenate output to the array
+               
+                // loop through the result array
+                foreach ($data as $row){
+                    // concatenate output to the array
+                    $output .= '
+                    <div class="form-row js-add mgb-20px">
+                        <div class="col js-input bd-ced4da" data-id='.$row->_id.'>'.$row->title.'</div>
+                        <div class="col col-auto"><button class="btn btn-success active btn-success" type="button">ADD</button></div>
+                    </div>';
+                }
+                // end of output
+              
+            }
+            else {
+                // if there's no matching results according to the input
+                $output .= '<p>Không tìm thấy option</p>';
+            }
+            // return output result array
+            return $output;
+        // }
+
+        // else
+        // {
+        //     return '11111';
+        // }
     }
 }
