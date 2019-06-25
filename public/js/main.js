@@ -53,6 +53,7 @@ $(document).ready(function(){
     function updateInputIDs(id, add)
     {
         var ids = $('input#js-ids').val();
+        console.log(ids);
         if(ids)
         {
 
@@ -83,6 +84,8 @@ $(document).ready(function(){
         {
             $('input#js-ids').val(JSON.stringify([id]));
         }
+        console.log(ids + $('input#js-ids').val());
+
     }
 })
 

@@ -34,7 +34,7 @@
             <div id="js-options-input">
            
             </div>
-            <input type="hidden" name="options" id="js-ids" />            
+            <input type="hidden" name="ids" id="js-ids" />            
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>

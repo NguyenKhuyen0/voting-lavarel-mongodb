@@ -13,10 +13,10 @@ class Question extends Eloquent
 
     public function voting()
     {
-        return $this->belongsTo('Voting');
+        return $this->belongsTo('App\Voting');
     }
     public function options()
     {
-        return $this->hasMany('Option');
+        return $this->hasMany('App\Option');
     }
 }

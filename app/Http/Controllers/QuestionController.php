@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use App\Option;
 use Illuminate\Http\Request;
+use App\Option;
 
 class QuestionController extends Controller
 {
@@ -27,7 +27,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        
+        $option = new Option();
         return view('question.create');
     }
 
@@ -39,28 +39,28 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $options = \App\Option::all();
+        
         $question= new Question();
-        $question->title = $request->get('title');
+        $question->question = $request->get('question');
         $options = [];
-        if($request->ids)
+        if($request->get('ids'))
         {
-            $ids = json_decode($question->ids);
+            $ids = json_decode($request->get('ids'));
+    
             foreach($ids as $id)
             {
 
-                $option =  Option::where('_id', 'LIKE', $id.'%')
-                ->get();
-                var_dump('aaaaa');
-                die();
+                // $option =  Option::where('_id', 'LIKE', $id.'%')
+                // ->get();
+                $option = Option::find($id);
                 
                 $options []= $option;
                
             }
         }
-        $question->options()->saveMany($options);
-
+        
         $question->save();
+        $question->options()->saveMany($options);
 
         return redirect('question')->with('success', 'Question has been successfully added');
     }

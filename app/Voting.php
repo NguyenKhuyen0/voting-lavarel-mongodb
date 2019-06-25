@@ -13,6 +13,6 @@ class Voting extends Eloquent
 
     public function questions()
     {
-        return $this->hasMany('Question');
+        return $this->hasMany('App\Question');
     }
 }
