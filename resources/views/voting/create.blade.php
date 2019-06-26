@@ -1,6 +1,9 @@
+@extends('admin_template')
+
+@section('content')
 <!-- optioncreate.blade.php -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -11,7 +14,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
     <script src="{{asset('js/main.js')}}"></script>
   </head>
-  <body>
+  <body> -->
     <div class="contact-clean" style="width: 100%;">
           <form method="post" action="{{url('voting/add')}}" enctype="multipart/form-data">
               @csrf
@@ -37,7 +40,7 @@
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>
-</body> 
+<!-- </body>  -->
 
 <script type="text/javascript">
             // jQuery wait till the page is fullt loaded
@@ -68,4 +71,5 @@
             });
         </script>
  
-</html>
+<!-- </html> -->
+@endsection

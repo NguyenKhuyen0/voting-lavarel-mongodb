@@ -1,15 +1,18 @@
+@extends('admin_template')
+
+@section('content')
 <!-- question index.blade.php -->
 <?php
 use App\Option;
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <title>Index Page</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
   </head>
-  <body>
+  <body> -->
     <div class="container">
     <br />
     @if (\Session::has('success'))
@@ -58,5 +61,6 @@ use App\Option;
     </tbody>
   </table>
   </div>
-  </body>
-</html>
+  <!-- </body>
+</html> -->
+@endsection

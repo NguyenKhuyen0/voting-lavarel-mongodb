@@ -1,8 +1,11 @@
+@extends('admin_template')
+
+@section('content')
 <!-- optioncreate.blade.php -->
 <?php
 use App\Question;
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,14 +16,15 @@ use App\Question;
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
     <script src="{{asset('js/main.js')}}"></script>
   </head>
-  <body>
+  <body> -->
+
     <div class="contact-clean" style="width: 100%;">
-          <form method="post" action="{{url('voting/update')}}" enctype="multipart/form-data">
+          <form method="post" action="{{action('VotingController@update', $id)}}" enctype="multipart/form-data">
               @csrf
             <h2 class="text-center">Edit Voting</h2>
             <div class="form-row" style="margin-bottom: 20px">
-              <label for="search">Question</label>
-              <input type="text" placeholder="Enter the question" name="question" class="form-control" value="{{$voting->title}}"/>
+              <label for="search">Title</label>
+              <input type="text" placeholder="Enter the question" name="title" class="form-control" value="{{$voting->title}}"/>
             </div>
             <div class="form-row" style="margin-bottom: 20px">
               <label>Search Question</label>
@@ -51,7 +55,7 @@ use App\Question;
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>
-</body> 
+<!-- </body>  -->
 
 <script type="text/javascript">
             // jQuery wait till the page is fullt loaded
@@ -82,4 +86,5 @@ use App\Question;
             });
         </script>
  
-</html>
+<!-- </html> -->
+@endsection

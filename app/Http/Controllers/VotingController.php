@@ -114,7 +114,7 @@ class VotingController extends Controller
         }
 
         $voting->save();
-        $voting->votings()->saveMany($questions);
+        $voting->questions()->saveMany($questions);
 
         return redirect('voting')->with('success', 'Question has been successfully added');
     }

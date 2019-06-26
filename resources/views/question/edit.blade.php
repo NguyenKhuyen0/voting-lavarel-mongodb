@@ -1,8 +1,11 @@
+@extends('admin_template')
+
+@section('content')
 <!-- optioncreate.blade.php -->
 <?php
 use App\Option;
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,9 +16,9 @@ use App\Option;
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
     <script src="{{asset('js/main.js')}}"></script>
   </head>
-  <body>
+  <body> -->
     <div class="contact-clean" style="width: 100%;">
-          <form method="post" action="{{url('question/update')}}" enctype="multipart/form-data">
+          <form method="post" action="{{action('QuestionController@update', $id)}}" enctype="multipart/form-data">
               @csrf
             <h2 class="text-center">Edit Question</h2>
             <div class="form-row" style="margin-bottom: 20px">
@@ -51,7 +54,7 @@ use App\Option;
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>
-</body> 
+<!-- </body>  -->
 
 <script type="text/javascript">
             // jQuery wait till the page is fullt loaded
@@ -82,4 +85,6 @@ use App\Option;
             });
         </script>
  
-</html>
+<!-- </html> -->
+
+@endsection

@@ -104,3 +104,16 @@
 {
   margin-bottom: 20px;
 }
+@media (min-width: 768px)
+{
+
+  .nav.navbar-nav {
+      float: left;
+      margin: 0;
+      display: block;
+  }
+  .navbar-nav>li {
+      float: left;
+      margin-right: 20px;
+  }
+}

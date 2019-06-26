@@ -1,6 +1,9 @@
+@extends('admin_template')
+
+@section('content')
 <!-- optioncreate.blade.php -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -12,7 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
     <script src="{{asset('js/main.js')}}"></script>
   </head>
-  <body class="bg-colorf1f7fc">
+  <body class="bg-colorf1f7fc"> -->
       <div class="contact-clean" style="width: 100%;">
         <form method="post" action="{{url('option/add')}}" enctype="multipart/form-data">
           @csrf
@@ -35,5 +38,6 @@
           <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
       </form>
       </div>
-  </body>
-</html>
+  <!-- </body>
+</html> -->
+@endsection
