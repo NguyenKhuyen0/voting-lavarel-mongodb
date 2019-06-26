@@ -17,7 +17,7 @@
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+      <!-- <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -25,24 +25,49 @@
               </button>
             </span>
         </div>
-      </form>
+      </form> -->
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <!-- <li class="header">HEADER</li> -->
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+        <!-- <li><a href="/voting"><i class="fa fa-link"></i> <span>Votings</span></a></li>
+        <li><a href="/question"><i class="fa fa-link"></i> <span>Questions</span></a></li>
+        <li><a href="/option"><i class="fa fa-link"></i> <span>Options</span></a></li> -->
+
+        <!-- <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+          <a href="/voting"><i class="fa fa-link"></i> <span>Votings</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li><a href="/voting">All Votings</a></li>
+            <li><a href="/voting/add">New Voting</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="/question"><i class="fa fa-link"></i> <span>Questions</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/question">All Question</a></li>
+            <li><a href="/question/add">New Question</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="/option"><i class="fa fa-link"></i> <span>Options</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/option">All Options</a></li>
+            <li><a href="/option/add">New Option</a></li>
           </ul>
         </li>
       </ul>
