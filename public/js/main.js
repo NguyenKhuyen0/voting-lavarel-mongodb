@@ -60,16 +60,21 @@ $(document).ready(function(){
 
             ids =  JSON.parse(ids);
 
-            if(ids.indexOf(id) != -1)
+            if(ids.indexOf(id) == -1)
             {
+                console.log('here');
                 if(add)
                 {
                     ids.push(id);
+                    console.log(ids);
+                    console.log('here2');
                     $('input#js-ids').val(JSON.stringify(ids));
                 }
             }
             else
             {
+                console.log('here1');
+
                 if(!add)
                 {
                     var index= ids.indexOf(id);

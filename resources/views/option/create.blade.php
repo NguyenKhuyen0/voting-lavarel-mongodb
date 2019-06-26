@@ -13,7 +13,7 @@
     <script src="{{asset('js/main.js')}}"></script>
   </head>
   <body class="bg-colorf1f7fc">
-      <div class="pd-80px0" style="width: 100%;">
+      <div class="contact-clean" style="width: 100%;">
         <form method="post" action="{{url('option/add')}}" enctype="multipart/form-data">
           @csrf
           <h2 class="text-center">Create Option</h2>

@@ -16,8 +16,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions= Question::all();
-        $options = Option::all();
-        return view('question.index',compact('options'));
+        return view('question.index',compact('questions'));
     }
 
     /**
@@ -58,7 +57,7 @@ class QuestionController extends Controller
                
             }
         }
-        
+
         $question->save();
         $question->options()->saveMany($options);
 
@@ -105,9 +104,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy($id)
     {
-        //
+        $question = Question::find($id);
+        $question->delete();
+        return redirect('question')->with('success','Question has been  deleted');
     }
 
     public function search(Request $request)

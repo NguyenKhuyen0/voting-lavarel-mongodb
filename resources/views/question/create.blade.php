@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <title>Laravel MongoDB CRUD Tutorial With Example</title>
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">  
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>  
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>  
