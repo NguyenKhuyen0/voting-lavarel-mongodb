@@ -2,10 +2,11 @@ $(document).ready(function(){
     function readURL(input) {
         if (input.files && input.files[0]) {
           for (i = 0; i < input.files.length; i++) {
-              $('#js-' + $(input).attr('name') + '-wrapper').html('');
+              console.log($(input).attr('name').replace('[]',''));
+              $('#js-' + $(input).attr('name').replace('[]','') + '-wrapper').html('');
               var reader = new FileReader();
               reader.onload = function(e) {
-                $('#js-' + $(input).attr('name') + '-wrapper').append(
+                $('#js-' + $(input).attr('name').replace('[]','') + '-wrapper').append(
                     '<div class="col" id="js-file-wrapper"><img src="'+e.target.result+'" style="width: 100px" /></div>');
               }
               reader.readAsDataURL(input.files[i]);
@@ -92,5 +93,82 @@ $(document).ready(function(){
         console.log(ids + $('input#js-ids').val());
 
     }
+
+    $("body").on("click","#js-add-option",function(){
+    
+        // createRowOption()
+    })
+    function ajaxCreateOption()
+    {
+        var option {'title':query}
+        $.ajax({
+            // assign a controller function to perform search action - route name is search
+            url:"{{ url('question/search') }}",
+            // since we are getting data methos is assigned as GET
+            type:"GET",
+            // data are sent the server
+            data: option,
+            // if search is succcessfully done, this callback function is called
+            success:function (data) {
+                // print the search results in the div called country_list(id)
+                $('#js-search-input').html(data);
+
+            }
+        })
+    }
+
+    $("#form").on('submit',(function(e) {
+        e.preventDefault();
+        $.ajax({
+               url: "question/add",
+         type: "POST",
+         data:  new FormData(this),
+         contentType: false,
+               cache: false,
+         processData:false,
+         beforeSend : function()
+         {
+          //$("#preview").fadeOut();
+          $("#err").fadeOut();
+         },
+         success: function(data)
+            {
+          if(data=='invalid')
+          {
+           // invalid file format.
+           $("#err").html("Invalid File !").fadeIn();
+          }
+          else
+          {
+           // view uploaded file.
+           $("#preview").html(data).fadeIn();
+           $("#form")[0].reset(); 
+          }
+            },
+           error: function(e) 
+            {
+          $("#err").html(e).fadeIn();
+            }          
+          });
+       }));
 })
 
+
+function createRowOption()
+{
+    return  '<tr>' +    
+                '<td>Ca sĩ sơn tùng</td>' +
+                '<td>Ca sĩ sơn tùng</td>' +
+                '<td><img src="/images/'+$("input[name='image']").prop("files")[0].name+'" width="50px"></td>' +
+                ' <td>' +
+                    '<img src="/images/58444198_2263823213696870_2016977145405898752_n.png" width="50px">' +
+                    '<img src="/images/app.ico" width="50px">'  +        
+                '</td>' +
+
+                '<td>111</td>' +
+                '<td><a href="/option/edit/5d12e2ed8f04e72640004b18" class="btn btn-warning">Edit</a></td>' +
+                '<td>' +
+                ' <button class="btn btn-danger" type="submit">Delete</button>' +
+                '</td>' +
+            '</tr>' ;
+}

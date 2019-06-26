@@ -25,7 +25,7 @@
           <div class="form-group"><label class="d-block" for="image" style="font-size: 18px;">Image option</label><input type="file" name="image" /></div>
           <div class="form-row" id="js-image-wrapper">
           @if ($option->image)
-            <div class="col" id="js-file-wrapper"><img src="{{url('/images/'.$option->image)}}" /></div>
+            <div class="col" id="js-file-wrapper"><img src="{{url('/images/'.$option->image)}}" width="100px" /></div>
           @endif
           </div>
           <div class="form-group"><label class="d-block" for="gallery" style="margin-top: 20px;font-size: 18px;">Gallery</label><input type="file" name="gallery" multiple /></div>

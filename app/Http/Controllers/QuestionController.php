@@ -142,7 +142,7 @@ class QuestionController extends Controller
 
         // if($request->ajax()) {
             // select country name from database
-            $data = Option::where('title', 'LIKE', $request->title.'%')
+            $data = Option::where('title', 'LIKE', '%'.$request->title.'%')
                 ->get();
             // declare an empty array for output
             $output = '';

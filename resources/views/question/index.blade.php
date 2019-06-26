@@ -14,21 +14,21 @@ use App\Option;
   </head>
   <body> -->
     <div class="container">
-    <br />
-    @if (\Session::has('success'))
-      <div class="alert alert-success">
-        <p>{{ \Session::get('success') }}</p>
-      </div><br />
-     @endif
-    <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>question</th>
-        <th>Options</th>
-      </tr>
-    </thead>
-    <tbody>
+      <br />
+      @if (\Session::has('success'))
+        <div class="alert alert-success">
+          <p>{{ \Session::get('success') }}</p>
+        </div><br />
+      @endif
+      <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>question</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
       
       @foreach($questions as $question)
       <tr>

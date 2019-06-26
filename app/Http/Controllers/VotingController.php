@@ -138,7 +138,7 @@ class VotingController extends Controller
 
         // if($request->ajax()) {
             // select country name from database
-            $data = Question::where('question', 'LIKE', $request->title.'%')
+            $data = Question::where('question', 'LIKE', '%'.$request->title.'%')
                 ->get();
             // declare an empty array for output
             $output = '';
