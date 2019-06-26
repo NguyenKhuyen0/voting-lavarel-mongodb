@@ -45,7 +45,7 @@ $(document).ready(function(){
     function createOptionInput(title, id)
     {
 
-        return '<div class="form-row js-remove" data-id="'+id+'">' 
+        return '<div class="form-row js-remove mgb-20px"  data-id="'+id+'">' 
             + '<div class="col" style="box-shadow: 1px 1px 1px rgba(0,0,0,0.05);border: 1px solid #ced4da;">'+title+'</div>' 
             + '<div class="col col-auto"><button class="btn btn-danger active btn-danger remove" type="button">Remove</button></div>'
         + '</div>';

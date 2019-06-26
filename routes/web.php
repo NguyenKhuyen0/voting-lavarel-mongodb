@@ -53,3 +53,4 @@ Route::get('voting','VotingController@index');
 Route::get('voting/edit/{id}','VotingController@edit');
 Route::post('voting/edit/{id}','VotingController@update');
 Route::delete('voting/{id}','VotingController@destroy');
+Route::get('voting/search','VotingController@search');

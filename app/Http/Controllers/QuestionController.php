@@ -26,7 +26,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $option = new Option();
+
         return view('question.create');
     }
 
@@ -81,9 +81,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit($id)
     {
-        //
+        
+        $question = Question::find($id);
+        return view('question.edit',compact('question','id'));
     }
 
     /**
@@ -93,9 +95,32 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, $id)
     {
-        //
+        $question= Question::find($id);
+        $question->question = $request->get('question');
+        $options = [];
+        if($request->get('ids'))
+        {
+            $ids = json_decode($request->get('ids'));
+    
+            foreach($ids as $id)
+            {
+
+                // $option =  Option::where('_id', 'LIKE', $id.'%')
+                // ->get();
+                $option = Option::find($id);
+                
+                $options []= $option;
+               
+            }
+        }
+
+        $question->save();
+
+        $question->options()->saveMany($options);
+
+        return redirect('question')->with('success', 'Question has been successfully added');
     }
 
     /**

@@ -29,7 +29,7 @@
             <div id="js-search-input">
      
             </div>
-            <h3 class="d-none" id="js-options-id">Options:</h3>
+            <h3 class="d-none mgb-20px" id="js-options-id">Options:</h3>
             <div id="js-options-input">
            
             </div>

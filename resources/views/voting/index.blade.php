@@ -1,5 +1,7 @@
-<!-- Option index.blade.php -->
-
+<!-- voting index.blade.php -->
+<?php
+use App\question;
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -19,34 +21,33 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Title</th>
-        <th>Content</th>
-        <th>image</th>
-        <th>Galary</th>
-        <th colspan="2">votes</th>
+        <th>voting</th>
+        <th>questions</th>
       </tr>
     </thead>
     <tbody>
       
-      @foreach($options as $option)
+      @foreach($votings as $voting)
       <tr>
-        <td>{{$option->id}}</td>
-        <td>{{$option->title}}</td>
-        <td>{{$option->content}}</td>
-        <td><img src="{{url('/images/'.$option->image)}}" width="50px"></td>
-        <td>
-        @if ($option->gallery)
-        @foreach ($option->gallery as $img)
-        <img src="{{url('/images/'.$img)}}" width="50px">
-        @endforeach
-        @endif
-        
-        </td>
+        <td>{{$voting->id}}</td>
+        <td>{{$voting->title}}</td>
+        <?php
+          // var_dump(new question());
+            $questions =  Question::where('voting_id', 'LIKE', $voting->id.'%')->get();
+            
 
-        <td>{{$option->votes}}</td>
-        <td><a href="{{action('OptionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
+   
+            // die();
+        ?>
         <td>
-          <form action="{{action('OptionController@destroy', $option->id)}}" method="post">
+
+        @foreach($questions as $question)
+          - {{$question->question}}<br>
+        @endforeach
+        </td>
+        <td><a href="{{action('VotingController@edit', $voting->id)}}" class="btn btn-warning">Edit</a></td>
+        <td>
+          <form action="{{action('VotingController@destroy', $voting->id)}}" method="post">
             @csrf
             <input name="_method" type="hidden" value="DELETE">
             <button class="btn btn-danger" type="submit">Delete</button>
