@@ -26,7 +26,7 @@ Route::delete('{id}','CarController@destroy');
 
 Route::get('admin', function () {
     return view('admin_template');
-});
+})->middleware('auth');
 
 // option
 Route::get('option/add','OptionController@create');
@@ -83,3 +83,7 @@ Route::get('iframe/voting/{id}','VotingController@show');
 Route::get('iframe/question/{id}','QuestionController@show');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
