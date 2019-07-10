@@ -37,8 +37,50 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
+        $image = '';
+        $gallery = [];
         
+        // $request->validate([
+ 
+        //     'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        //     'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+ 
+        // ]);
+ 
+        
+        if($request->hasfile('gallery'))
+        {
+            foreach($request->file('gallery') as $img)
+            {
+                $name=$img->getClientOriginalName();
+                $img->move(public_path().'/images/', $name);  
+                $gallery []= $name;  
+            }
+        }
+   
 
+        if($request->hasfile('image'))
+        {
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move(public_path().'/images/', $name);  
+            $image = $name;  
+        }
+     
+
+        $option= new Option();
+        $option->title = $request->get('title');
+        $option->content = $request->get('content');
+        $option->image = $image;
+        $option->gallery =  $gallery;
+        $option->votes = (int) $request->get('votes');  
+        $option->active = (Boolean) $request->get('active');
+        $option->save();
+
+        return redirect('option')->with('success', 'Option has been successfully added');
+    }
+    public function apistore(Request $request)
+    {
         $image = '';
         $gallery = [];
         
@@ -77,8 +119,8 @@ class OptionController extends Controller
         $option->gallery =  $gallery;
         $option->votes = $request->get('votes');       
         $option->save();
-
-        return redirect('option')->with('success', 'Option has been successfully added');
+    
+        echo json_encode($option);
     }
 
     /**
@@ -156,7 +198,8 @@ class OptionController extends Controller
         {
             $option->gallery =  $gallery;
         }
-        $option->votes = $request->get('votes');       
+        $option->votes = (int) $request->get('votes');  
+        $option->active = (Boolean) $request->get('active');      
         $option->save();
 
         return redirect('option')->with('success', 'Option has been successfully added');
@@ -170,8 +213,16 @@ class OptionController extends Controller
      */
     public function destroy($id)
     {
+
         $option = Option::find($id);
+        
         $option->delete();
         return redirect('option')->with('success','option has been  deleted');
+    }
+    public function apidestroy($id)
+    {
+        $option = Option::find($id);
+        $option->delete();
+        echo true;
     }
 }

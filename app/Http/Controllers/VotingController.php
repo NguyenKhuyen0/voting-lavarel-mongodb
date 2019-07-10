@@ -40,6 +40,7 @@ class VotingController extends Controller
         
         $voting= new Voting();
         $voting->title = $request->get('title');
+        $voting->description = $request->get('description');
         $questions = [];
         if($request->get('ids'))
         {
@@ -55,6 +56,15 @@ class VotingController extends Controller
                 $questions []= $question;
             }
         }
+        if($request->hasfile('image'))
+        {
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move(public_path().'/images/', $name);  
+            $image = $name;  
+        }
+     
+        $voting->image = $image;
 
         $voting->save();
         $voting->questions()->saveMany($questions);
@@ -68,9 +78,10 @@ class VotingController extends Controller
      * @param  \App\voting  $voting
      * @return \Illuminate\Http\Response
      */
-    public function show(voting $voting)
+    public function show($id)
     {
-        //
+        $voting = Voting::find($id);
+        return view('iframe.voting',compact('voting','id'));
     }
 
     /**
@@ -97,7 +108,10 @@ class VotingController extends Controller
     {
         $voting= Voting::find($id);
         $voting->title = $request->get('title');
+        $voting->description = $request->get('description');
+
         $questions = [];
+        $image = '';
         if($request->get('ids'))
         {
             $ids = json_decode($request->get('ids'));
@@ -112,7 +126,15 @@ class VotingController extends Controller
                 $questions []= $question;
             }
         }
-
+        if($request->hasfile('image'))
+        {
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move(public_path().'/images/', $name);  
+            $image = $name;  
+        }
+     
+        $voting->image = $image;
         $voting->save();
         $voting->questions()->saveMany($questions);
 

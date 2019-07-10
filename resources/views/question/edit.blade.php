@@ -2,9 +2,7 @@
 
 @section('content')
 <!-- optioncreate.blade.php -->
-<?php
-use App\Option;
-?>
+
 <!-- <!DOCTYPE html>
 <html>
   <head>
@@ -17,43 +15,118 @@ use App\Option;
     <script src="{{asset('js/main.js')}}"></script>
   </head>
   <body> -->
-    <div class="contact-clean" style="width: 100%;">
-          <form method="post" action="{{action('QuestionController@update', $id)}}" enctype="multipart/form-data">
-              @csrf
+  <?php
+    use App\Option;
+    $options =  Option::where('question_id', 'LIKE', $question->id.'%')->get();
+    $ids = [];
+    foreach($options as $option)
+    {
+      $ids []= $option->id;
+    }
+  ?>
+  <div class="row">
+      <div class="col-md-4">
+        <div style="width: 100%;">
+          <form method="post" action="{{url('api/v1/option/add')}}" enctype="multipart/form-data" id="add-option-form">
+            @csrf
+            <h2 class="text-center">Create Option</h2>
+            <div class="form-group"><input type="text" name="title" placeholder="Title" class="form-control" /></div>
+            <div class="form-group"><textarea rows="14" name="content" placeholder="Content" class="form-control"></textarea></div>
+            <div class="form-group"><label class="d-block" for="image" style="font-size: 18px;">Image option</label><input type="file" name="image" /></div>
+            <div class="form-row" id="js-image-wrapper">
+                <!-- <div class="col" id="js-file-wrapper"><img src="https://via.placeholder.com/100" /></div> -->
+            </div>
+            <div class="form-group"><label class="d-block" for="gallery" style="margin-top: 20px;font-size: 18px;">Gallery</label><input type="file" name="gallery[]" multiple /></div>
+            <div class="form-row" id="js-gallery-wrapper">
+                <!-- <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
+                <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
+                <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
+                <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
+                <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div> -->
+            </div>
+            <div class="form-group" style="  margin-top: 20px;"><input type="text" name="votes" placeholder="Số lượt votes" class="form-control" /></div>
+            <div class="form-group"><button class="btn btn-primary" type="submit">Add</button></div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div  style="width: 100%;">
+          <form method="post" action="{{action('QuestionController@update', $id)}}" enctype="multipart/form-data" id="add_question_form">
+            @csrf
             <h2 class="text-center">Edit Question</h2>
             <div class="form-row" style="margin-bottom: 20px">
-              <label for="search">Question</label>
-              <input type="text" placeholder="Enter the question" name="question" class="form-control" value="{{$question->question}}"/>
-            </div>
-            <div class="form-row" style="margin-bottom: 20px">
-              <label>Search Options</label>
-              <input type="search" placeholder="Search options" class="form-control" id="js-search" />
+              <input type="text" placeholder="Enter the question" name="question" class="form-control" value="{{$question->question}}" />
             </div>
             
-            <div id="js-search-input">
      
-            </div>
-  
-            <h3 id="js-options-id" class="mgb-20px">Options:</h3>
+            <input type="hidden" name="ids" id="js-ids" value="{{json_encode($ids)}}" />            
+          </form>
+          <div id="js-options-form-wrapper">
+            <h3 class="mgb-20px" id="js-options-id">Options:</h3>
             <div id="js-options-input">
                 <?php
-                    $options =  Option::where('question_id', 'LIKE', $question->id.'%')->get();
-                    $ids = [];
+                  //use App\Option;
+                 // $options = Option::all();
+
                 ?>
-                @foreach($options as $option)
-                <?php $ids []= $option->id; ?>
-                <div class="form-row js-remove mgb-20px"  data-id="{{$option->id}}">
-                  <div class="col" style="box-shadow: 1px 1px 1px rgba(0,0,0,0.05);border: 1px solid #ced4da;">{{$option->title}}</div>
-                  <div class="col col-auto"><button class="btn btn-danger active btn-danger remove" type="button">Remove</button></div>
+                <div class="">
+                  <br />
+                  @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                      <p>{{ \Session::get('success') }}</p>
+                    </div><br />
+                  @endif
+                  <table class="table table-striped">
+                  <thead>
+                    <tr>
+                  
+                      <th>Title</th>
+                      <th>Content</th>
+                      <th>image</th>
+                      <th>Galary</th>
+                      <th colspan="2">votes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    @foreach($options as $option)
+                    <tr>
+                      <td>{{$option->title}}</td>
+                      <td>{{$option->content}}</td>
+                      <td><img src="{{url('/images/'.$option->image)}}" width="50px"></td>
+                      <td>
+                      @if ($option->gallery)
+                      @foreach ($option->gallery as $img)
+                      <img src="{{url('/images/'.$img)}}" width="50px">
+                      @endforeach
+                      @endif
+                      
+                      </td>
+
+                      <td>{{$option->votes}}</td>
+                      <td><a href="{{action('OptionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
+                      <td>
+                        <form action="{{action('OptionController@apidestroy', $option->id)}}" method="POST" class="js-delete-option" data-id="{{$option->id}}">
+                          @csrf
+                          <input name="_method" type="hidden" value="DELETE">
+                          <button class="btn btn-danger"  type="submit">Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                  </table>
                 </div>
-                @endforeach
             </div>
-            
-            <input type="hidden" name="ids" id="js-ids" value="{{json_encode($ids)}}" />      
-            
-            <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
-        </form>
-    </div>
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>
+            <div class="form-group"><button class="btn btn-primary" for="add_question_form" type="submit">Lưu</button></div> 
+          </div>
+        </div>
+
+      </div>
+ 
+  </div>
+
 <!-- </body>  -->
 
 <script type="text/javascript">

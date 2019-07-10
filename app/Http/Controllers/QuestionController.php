@@ -41,6 +41,7 @@ class QuestionController extends Controller
         
         $question= new Question();
         $question->question = $request->get('question');
+        $question->active = (Boolean) $request->get('active');
         $options = [];
         if($request->get('ids'))
         {
@@ -72,7 +73,8 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $question = Question::find($id);
+        return view('iframe.question',compact('question','id'));
     }
 
     /**
@@ -99,6 +101,7 @@ class QuestionController extends Controller
     {
         $question= Question::find($id);
         $question->question = $request->get('question');
+        $question->active = (Boolean) $request->get('active');
         $options = [];
         if($request->get('ids'))
         {
@@ -122,6 +125,33 @@ class QuestionController extends Controller
 
         return redirect('question')->with('success', 'Question has been successfully added');
     }
+    public function apiupdate(Request $request, $id)
+    {
+        $question= Question::find($id);
+        $question->question = $request->get('question');
+        $options = [];
+        if($request->get('ids'))
+        {
+            $ids = json_decode($request->get('ids'));
+    
+            foreach($ids as $id)
+            {
+
+                // $option =  Option::where('_id', 'LIKE', $id.'%')
+                // ->get();
+                $option = Option::find($id);
+                
+                $options []= $option;
+               
+            }
+        }
+
+        $question->save();
+
+        $question->options()->saveMany($options);
+
+        echo json_encode($question);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -134,6 +164,13 @@ class QuestionController extends Controller
         $question = Question::find($id);
         $question->delete();
         return redirect('question')->with('success','Question has been  deleted');
+    }
+
+    public function apidestroy($id)
+    {
+        $question = Question::find($id);
+        $question->delete();
+        echo true;
     }
 
     public function search(Request $request)

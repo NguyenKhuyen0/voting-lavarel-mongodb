@@ -23,16 +23,24 @@ use App\Question;
               @csrf
             <h2 class="text-center">Edit Voting</h2>
             <div class="form-row" style="margin-bottom: 20px">
+    
               <label for="search">Title</label>
               <input type="text" placeholder="Enter the question" name="title" class="form-control" value="{{$voting->title}}"/>
             </div>
+            <div class="form-group"><textarea rows="14" name="description" placeholder="Description" class="form-control"  value="{{$voting->description}}">{{$voting->description}}</textarea></div>
+            <div class="form-group"><label class="d-block" for="image" style="font-size: 18px;">Image</label><input type="file" name="image" /></div>
+            <div class="form-row" id="js-image-wrapper">
+                @if ($voting->image)
+                <div class="col" id="js-file-wrapper"><img src="{{url('/images/'.$voting->image)}}" width="100px" /></div>
+                @endif
+            </div>
+      
             <div class="form-row" style="margin-bottom: 20px">
               <label>Search Question</label>
               <input type="search" placeholder="Search questions" class="form-control" id="js-search" />
             </div>
             
             <div id="js-search-input">
-     
             </div>
   
             <h3 id="js-options-id" class="mgb-20px">Questions:</h3>
@@ -51,7 +59,7 @@ use App\Question;
             </div>
             
             <input type="hidden" name="ids" id="js-ids" value="{{json_encode($ids)}}" />      
-            
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>            
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>

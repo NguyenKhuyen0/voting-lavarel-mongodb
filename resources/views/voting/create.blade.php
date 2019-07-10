@@ -23,7 +23,10 @@
               <label for="search">Title</label>
               <input type="text" placeholder="Enter the title" name="title" class="form-control"/>
             </div>
-            
+            <div class="form-group"><textarea rows="14" name="description" placeholder="Description" class="form-control"></textarea></div>
+            <div class="form-group"><label class="d-block" for="image" style="font-size: 18px;">Image option</label><input type="file" name="image" /></div>
+            <div class="form-row" id="js-image-wrapper">
+            </div>
             <div class="form-row" style="margin-bottom: 20px">
               <label>Search Options</label>
               <input type="search" placeholder="Search options" class="form-control" id="js-search" />
@@ -36,7 +39,8 @@
             <div id="js-options-input">
            
             </div>
-            <input type="hidden" name="ids" id="js-ids" />            
+            <input type="hidden" name="ids" id="js-ids" />     
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>
