@@ -21,15 +21,6 @@ Route::group(['middleware' => 'auth'], function () {
         return view('admin_template');
     });
 
-
-    //  Test crud
-    Route::get('add','CarController@create');
-    Route::post('add','CarController@store');
-    Route::get('car','CarController@index');
-    Route::get('edit/{id}','CarController@edit');
-    Route::post('edit/{id}','CarController@update');
-    Route::delete('{id}','CarController@destroy');
-
     Route::get('admin', function () {
         return view('admin_template');
     });
@@ -91,3 +82,5 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 
+
+Route::get('v1/api/questions/1', 'QuestionController@index');

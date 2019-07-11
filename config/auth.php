@@ -40,11 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        
         'api' => [
-            'driver' => 'token',
+            'driver' => 'keycloak', # <-- Set the API guard driver to "keycloak"
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 

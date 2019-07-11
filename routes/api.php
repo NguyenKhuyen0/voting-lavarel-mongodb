@@ -16,3 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// protected endpoints
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('v1/questions', 'QuestionController@index');
+    // more endpoints ...
+ });
+Route::get('/hello', function () {
+    return ':)';
+});

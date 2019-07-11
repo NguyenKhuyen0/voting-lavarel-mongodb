@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Question;
 use Illuminate\Http\Request;
 use App\Option;
-
+use Illuminate\Support\Facades\Auth;
 class QuestionController extends Controller
 {
     /**
@@ -15,6 +15,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        
+        echo json_encode(Auth::user());
+        die();
         $questions= Question::all();
         return view('question.index',compact('questions'));
     }
