@@ -79,50 +79,6 @@ class OptionController extends Controller
 
         return redirect('option')->with('success', 'Option has been successfully added');
     }
-    public function apistore(Request $request)
-    {
-        $image = '';
-        $gallery = [];
-        
-        // $request->validate([
- 
-        //     'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-        //     'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
- 
-        // ]);
- 
-        
-        if($request->hasfile('gallery'))
-        {
-            foreach($request->file('gallery') as $img)
-            {
-                $name=$img->getClientOriginalName();
-                $img->move(public_path().'/images/', $name);  
-                $gallery []= $name;  
-            }
-        }
-   
-
-        if($request->hasfile('image'))
-        {
-            $img = $request->file('image');
-            $name = $img->getClientOriginalName();
-            $img->move(public_path().'/images/', $name);  
-            $image = $name;  
-        }
-     
-
-        $option= new Option();
-        $option->title = $request->get('title');
-        $option->content = $request->get('content');
-        $option->image = $image;
-        $option->gallery =  $gallery;
-        $option->votes = $request->get('votes');       
-        $option->save();
-    
-        echo json_encode($option);
-    }
-
     /**
      * Display the specified resource.
      *
@@ -219,10 +175,16 @@ class OptionController extends Controller
         $option->delete();
         return redirect('option')->with('success','option has been  deleted');
     }
-    public function apidestroy($id)
+    public function api_vote(Request $request, $id)
     {
         $option = Option::find($id);
-        $option->delete();
-        echo true;
+        $voted_users =  $option->voted_users;
+        $id_user = $request->get('id_user');
+        if( (is_array($voted_users) && !in_array( $id_user ,$voted_users)) || empty($voted_users))
+        {
+            $option->voted_users =  $voted_users ? (array_push($voted_users, $id_user)) : [$id_user];
+            $option->votes = (int) $option->votes + 1;
+            $option->save();
+        }
     }
 }

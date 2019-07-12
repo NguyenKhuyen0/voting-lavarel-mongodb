@@ -16,6 +16,8 @@ return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
+        // 'guard' => 'api', # <-- For sure, i`m building an API
+        // 'passwords' => 'users',
     ],
 
     /*

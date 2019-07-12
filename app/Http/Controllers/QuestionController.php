@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Question;
-use Illuminate\Http\Request;
 use App\Option;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 class QuestionController extends Controller
 {
     /**
@@ -15,9 +15,6 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        
-        echo json_encode(Auth::user());
-        die();
         $questions= Question::all();
         return view('question.index',compact('questions'));
     }
@@ -128,33 +125,6 @@ class QuestionController extends Controller
 
         return redirect('question')->with('success', 'Question has been successfully added');
     }
-    public function apiupdate(Request $request, $id)
-    {
-        $question= Question::find($id);
-        $question->question = $request->get('question');
-        $options = [];
-        if($request->get('ids'))
-        {
-            $ids = json_decode($request->get('ids'));
-    
-            foreach($ids as $id)
-            {
-
-                // $option =  Option::where('_id', 'LIKE', $id.'%')
-                // ->get();
-                $option = Option::find($id);
-                
-                $options []= $option;
-               
-            }
-        }
-
-        $question->save();
-
-        $question->options()->saveMany($options);
-
-        echo json_encode($question);
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -167,13 +137,6 @@ class QuestionController extends Controller
         $question = Question::find($id);
         $question->delete();
         return redirect('question')->with('success','Question has been  deleted');
-    }
-
-    public function apidestroy($id)
-    {
-        $question = Question::find($id);
-        $question->delete();
-        echo true;
     }
 
     public function search(Request $request)
@@ -214,5 +177,15 @@ class QuestionController extends Controller
         // {
         //     return '11111';
         // }
+    }
+    public function api_get_question($id)
+    {
+        $question = Question::find($id);
+        $options =  Option::where('question_id', 'LIKE', $question->id.'%')->get();
+        if($options)
+        {
+            $question->options = $options;
+        }
+        return json_encode($question);
     }
 }
