@@ -175,16 +175,31 @@ class OptionController extends Controller
         $option->delete();
         return redirect('option')->with('success','option has been  deleted');
     }
-    public function api_vote(Request $request, $id)
+    private function vote($id, $id_user)
     {
         $option = Option::find($id);
         $voted_users =  $option->voted_users;
-        $id_user = $request->get('id_user');
+
         if( (is_array($voted_users) && !in_array( $id_user ,$voted_users)) || empty($voted_users))
         {
             $option->voted_users =  $voted_users ? (array_push($voted_users, $id_user)) : [$id_user];
             $option->votes = (int) $option->votes + 1;
             $option->save();
+        }
+    }
+    private function getMaSo()
+    {
+
+    }
+    public function api_votes(Request $request)
+    {
+        $votes = $request->get('votes');
+        // votes : [{'id' => , 'id_user' =>}, ]
+        foreach($votes as $vote)
+        {
+            $id = $vote->id;
+            $id_user = $vote->id_user;
+            vote($id, $id_user);
         }
     }
 }

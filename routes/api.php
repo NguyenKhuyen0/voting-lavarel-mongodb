@@ -16,5 +16,7 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('v1/questions/{id}', 'QuestionController@api_get_question');
     Route::get('v1/votings/{id}', 'VotingController@api_get_voting');
-    Route::put('v1/vote/{id}', 'OptionController@api_vote');
+    // Route::put('v1/vote/{id}', 'OptionController@api_vote');
+    Route::put('v1/votes', 'APIVote@api_votes');
+
  });
