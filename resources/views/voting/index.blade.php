@@ -23,17 +23,25 @@ use App\question;
     <table class="table table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>voting</th>
-        <th>questions</th>
+        <!-- <th>ID</th> -->
+        <th>Voting</th>
+        <th>Questions</th>
+        <th>Image</th>
+        <th>Active</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Active</th>
+
       </tr>
     </thead>
     <tbody>
       
       @foreach($votings as $voting)
       <tr>
-        <td>{{$voting->id}}</td>
+        <!-- <td>{{$voting->id}}</td> -->
         <td>{{$voting->title}}</td>
+
+
         <?php
           // var_dump(new question());
             $questions =  Question::where('voting_id', 'LIKE', $voting->id.'%')->get();
@@ -48,6 +56,10 @@ use App\question;
           - {{$question->question}}<br>
         @endforeach
         </td>
+        <td>{{$voting->image}}</td>
+        <td>{{$voting->active}}</td>
+        <td>{{$voting->start_time}}</td>
+        <td>{{$voting->end_time}}</td>
         <td><a href="{{action('VotingController@edit', $voting->id)}}" class="btn btn-warning">Edit</a></td>
         <td>
           <form action="{{action('VotingController@destroy', $voting->id)}}" method="post">
@@ -58,6 +70,7 @@ use App\question;
         </td>
       </tr>
       @endforeach
+
     </tbody>
   </table>
   </div>

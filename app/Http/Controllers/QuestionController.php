@@ -102,6 +102,8 @@ class QuestionController extends Controller
         $question= Question::find($id);
         $question->question = $request->get('question');
         $question->active = (Boolean) $request->get('active');
+        var_dump($request->get('active'));
+        die();
         $options = [];
         if($request->get('ids'))
         {

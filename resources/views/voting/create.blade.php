@@ -40,7 +40,9 @@
            
             </div>
             <input type="hidden" name="ids" id="js-ids" />     
-            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active"  checked>  Active</div>
+            <div class="form-group" style="  margin-top: 20px;"><input type="datetime-local" name="start_time">  Thời gian bắt đầu</div>
+            <div class="form-group" style="  margin-top: 20px;"><input type="datetime-local" name="end_time">  Thời gian kết thúc</div>
             <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
     </div>

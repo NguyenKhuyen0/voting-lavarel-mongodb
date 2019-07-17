@@ -18,7 +18,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
         
     Route::get('/', function () {
-        return view('admin_template');
+        return redirect('voting');;
     });
 
     Route::get('admin', function () {
@@ -33,12 +33,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('option/edit/{id}','OptionController@update');
     Route::delete('option/{id}','OptionController@destroy');
 
-    // Route::get('api/v1/option/add','OptionController@apicreate');
-    // Route::post('api/v1/option/add','OptionController@apistore');
-    // Route::get('api/v1/option','OptionController@apiindex');
-    // Route::get('api/v1/option/edit/{id}','OptionController@apiedit');
-    // Route::post('api/v1/option/edit/{id}','OptionController@apiupdate');
-    // Route::delete('api/v1/option/{id}','OptionController@apidestroy');
+    Route::post('ajax/option/add','OptionController@ajax_store');
+
+
 
     // question
     Route::get('question/add','QuestionController@create');
@@ -83,4 +80,4 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-Route::get('v1/api/questions/1', 'QuestionController@index');
+

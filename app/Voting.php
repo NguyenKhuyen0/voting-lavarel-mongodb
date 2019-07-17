@@ -10,6 +10,9 @@ class Voting extends Eloquent
 {
     protected $connection = 'mongodb';
     protected $collection = 'votings';
+    protected $fillable = [
+        'title', 'description','image', 'active', 'start_time', 'end_time'
+    ];
 
     public function questions()
     {

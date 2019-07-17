@@ -18,7 +18,7 @@
   <div class="row">
       <div class="col-md-4">
         <div style="width: 100%;">
-          <form method="post" action="{{url('api/v1/option/add')}}" enctype="multipart/form-data" id="add-option-form">
+          <form method="post" action="{{url('ajax/option/add')}}" enctype="multipart/form-data" id="add-option-form">
             @csrf
             <h2 class="text-center">Create Option</h2>
             <div class="form-group"><input type="text" name="title" placeholder="Title" class="form-control" /></div>
@@ -44,12 +44,14 @@
         <div  style="width: 100%;">
           <form method="post" action="{{url('question/add')}}" enctype="multipart/form-data" id="add_question_form">
               @csrf
+            
             <h2 class="text-center">Create Question</h2>
             <div class="form-row" style="margin-bottom: 20px">
               <input type="text" placeholder="Enter the question" name="question" class="form-control"/>
             </div>
             
-            <input type="hidden" name="ids" id="js-ids" />            
+            <input type="hidden" name="ids" id="js-ids" />
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>            
           </form>
           <div class="d-none" id="js-options-form-wrapper">
             <h3 class="mgb-20px" id="js-options-id">Options:</h3>
@@ -79,7 +81,7 @@
                   </table>
                 </div>
             </div>
-            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>
+         
             <div class="form-group"><button class="btn btn-primary" for="add_question_form" type="submit">Lưu</button></div> 
           </div>
         </div>

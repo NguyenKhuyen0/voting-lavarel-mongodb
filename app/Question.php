@@ -10,7 +10,9 @@ class Question extends Eloquent
 {
     protected $connection = 'mongodb';
     protected $collection = 'questions';
-
+    protected $fillable = [
+        'question','options', 'voting_id', 'active', 'many_answers'
+    ];
     public function voting()
     {
         return $this->belongsTo('App\Voting');

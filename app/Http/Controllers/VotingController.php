@@ -43,6 +43,9 @@ class VotingController extends Controller
         $voting= new Voting();
         $voting->title = $request->get('title');
         $voting->description = $request->get('description');
+        $voting->active = $request->get('active');
+        $voting->start_time = $request->get('start_time');
+        $voting->end_time = $request->get('end_time');
         $questions = [];
         if($request->get('ids'))
         {
@@ -111,6 +114,11 @@ class VotingController extends Controller
         $voting= Voting::find($id);
         $voting->title = $request->get('title');
         $voting->description = $request->get('description');
+        $voting->active = (Boolean)$request->get('active');
+        // var_dump($request->get('active'));
+        // die();
+        $voting->start_time = $request->get('start_time');
+        $voting->end_time = $request->get('end_time');
 
         $questions = [];
         $image = '';

@@ -27,7 +27,7 @@
   <div class="row">
       <div class="col-md-4">
         <div style="width: 100%;">
-          <form method="post" action="{{url('api/v1/option/add')}}" enctype="multipart/form-data" id="add-option-form">
+          <form method="post" action="/ajax/option/add" enctype="multipart/form-data" id="add-option-form">
             @csrf
             <h2 class="text-center">Create Option</h2>
             <div class="form-group"><input type="text" name="title" placeholder="Title" class="form-control" /></div>
@@ -59,7 +59,9 @@
             </div>
             
      
-            <input type="hidden" name="ids" id="js-ids" value="{{json_encode($ids)}}" />            
+            <input type="hidden" name="ids" id="js-ids" value="{{json_encode($ids)}}" />   
+            <?php $checked = ''; $checked =  $question->active ? 'checked' : '';  ?>
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" {{$checked}} >  Active</div>         
           </form>
           <div id="js-options-form-wrapper">
             <h3 class="mgb-20px" id="js-options-id">Options:</h3>
@@ -84,7 +86,9 @@
                       <th>Content</th>
                       <th>image</th>
                       <th>Galary</th>
-                      <th colspan="2">votes</th>
+                      <th>votes</th>
+                      <th>active</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -102,11 +106,14 @@
                       @endif
                       
                       </td>
-
-                      <td>{{$option->votes}}</td>
+                      <?php
+                        $votes =  $option->votes ? $option->votes : "0";
+                      ?>
+                      <td>{{$votes}}</td>
+                      <td>{{$option->active}}</td>
                       <td><a href="{{action('OptionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
                       <td>
-                        <form action="{{action('OptionController@apidestroy', $option->id)}}" method="POST" class="js-delete-option" data-id="{{$option->id}}">
+                        <form action="{{action('OptionController@destroy', $option->id)}}" method="POST" class="js-delete-option" data-id="{{$option->id}}">
                           @csrf
                           <input name="_method" type="hidden" value="DELETE">
                           <button class="btn btn-danger"  type="submit">Delete</button>
@@ -118,7 +125,6 @@
                   </table>
                 </div>
             </div>
-            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>
             <div class="form-group"><button class="btn btn-primary" for="add_question_form" type="submit">Lưu</button></div> 
           </div>
         </div>

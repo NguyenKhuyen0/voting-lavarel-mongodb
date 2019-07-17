@@ -175,31 +175,45 @@ class OptionController extends Controller
         $option->delete();
         return redirect('option')->with('success','option has been  deleted');
     }
-    private function vote($id, $id_user)
+    public function ajax_store(Request $request)
     {
-        $option = Option::find($id);
-        $voted_users =  $option->voted_users;
-
-        if( (is_array($voted_users) && !in_array( $id_user ,$voted_users)) || empty($voted_users))
+        $image = '';
+        $gallery = [];
+        
+        // $request->validate([
+ 
+        //     'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        //     'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10240'
+ 
+        // ]);
+ 
+        
+        if($request->hasfile('gallery'))
         {
-            $option->voted_users =  $voted_users ? (array_push($voted_users, $id_user)) : [$id_user];
-            $option->votes = (int) $option->votes + 1;
-            $option->save();
+            foreach($request->file('gallery') as $img)
+            {
+                $name=$img->getClientOriginalName();
+                $img->move(public_path().'/images/', $name);  
+                $gallery []= $name;  
+            }
         }
-    }
-    private function getMaSo()
-    {
-
-    }
-    public function api_votes(Request $request)
-    {
-        $votes = $request->get('votes');
-        // votes : [{'id' => , 'id_user' =>}, ]
-        foreach($votes as $vote)
+   
+        if($request->hasfile('image'))
         {
-            $id = $vote->id;
-            $id_user = $vote->id_user;
-            vote($id, $id_user);
+            $img = $request->file('image');
+            $name = $img->getClientOriginalName();
+            $img->move(public_path().'/images/', $name);  
+            $image = $name;  
         }
+     
+        $option= new Option();
+        $option->title = $request->get('title');
+        $option->content = $request->get('content');
+        $option->image = $image;
+        $option->gallery =  $gallery;
+        $option->votes = $request->get('votes');       
+        $option->save();
+    
+        echo json_encode($option);
     }
 }

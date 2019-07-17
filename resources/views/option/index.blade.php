@@ -25,7 +25,8 @@
         <th>Content</th>
         <th>image</th>
         <th>Galary</th>
-        <th colspan="2">votes</th>
+        <th>votes</th>
+        <th>active</th>
       </tr>
     </thead>
     <tbody>
@@ -44,8 +45,10 @@
         @endif
         
         </td>
-
+     
         <td>{{$option->votes}}</td>
+        <td>{{$option->active}}</td>
+
         <td><a href="{{action('OptionController@edit', $option->id)}}" class="btn btn-warning">Edit</a></td>
         <td>
           <form action="{{action('OptionController@destroy', $option->id)}}" method="post">

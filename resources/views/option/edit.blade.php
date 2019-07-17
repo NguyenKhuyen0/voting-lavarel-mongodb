@@ -43,7 +43,8 @@
               
           </div>
           <div class="form-group" style="  margin-top: 20px;"><input type="text" name="votes" placeholder="Số lượt votes" class="form-control" value="{{$option->votes}}" /></div>
-          <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>
+          <?php $checked = ''; $checked =  $option->active ? 'checked' : '';  ?>
+          <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" {{$checked}} >  Active</div>
           <div class="form-group"><button class="btn btn-primary" type="submit">Lưu</button></div>
         </form>
       </div>

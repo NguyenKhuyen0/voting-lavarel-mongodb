@@ -26,6 +26,7 @@ use App\Option;
           <th>ID</th>
           <th>question</th>
           <th>Options</th>
+          <th>Active</th>
         </tr>
       </thead>
       <tbody>
@@ -48,6 +49,8 @@ use App\Option;
           - {{$option->title}}<br>
         @endforeach
         </td>
+        <?php echo $question->active; ?>
+        <td>{{$question->active}}</td>
         <td><a href="{{action('QuestionController@edit', $question->id)}}" class="btn btn-warning">Edit</a></td>
         <td>
           <form action="{{action('QuestionController@destroy', $question->id)}}" method="post">
