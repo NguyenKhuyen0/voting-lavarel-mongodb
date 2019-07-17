@@ -42,6 +42,8 @@ class QuestionController extends Controller
         $question= new Question();
         $question->question = $request->get('question');
         $question->active = (Boolean) $request->get('active');
+        $question->active = (Boolean) $request->get('many_answers');
+
         $options = [];
         if($request->get('ids'))
         {
@@ -102,8 +104,8 @@ class QuestionController extends Controller
         $question= Question::find($id);
         $question->question = $request->get('question');
         $question->active = (Boolean) $request->get('active');
-        var_dump($request->get('active'));
-        die();
+        $question->active = (Boolean) $request->get('many_answers');
+     
         $options = [];
         if($request->get('ids'))
         {

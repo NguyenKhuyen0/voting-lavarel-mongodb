@@ -27,6 +27,7 @@ use App\Option;
           <th>question</th>
           <th>Options</th>
           <th>Active</th>
+          <th>Nhiều đáp án</th>
         </tr>
       </thead>
       <tbody>
@@ -49,8 +50,10 @@ use App\Option;
           - {{$option->title}}<br>
         @endforeach
         </td>
-        <?php echo $question->active; ?>
+      
         <td>{{$question->active}}</td>
+        <td>{{$question->many_answers}}</td>
+
         <td><a href="{{action('QuestionController@edit', $question->id)}}" class="btn btn-warning">Edit</a></td>
         <td>
           <form action="{{action('QuestionController@destroy', $question->id)}}" method="post">

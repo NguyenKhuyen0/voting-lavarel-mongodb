@@ -61,7 +61,11 @@
      
             <input type="hidden" name="ids" id="js-ids" value="{{json_encode($ids)}}" />   
             <?php $checked = ''; $checked =  $question->active ? 'checked' : '';  ?>
-            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" {{$checked}} >  Active</div>         
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" {{$checked}} >  Active</div> 
+
+            <?php $checked = ''; $checked =  $question->many_answers ? 'checked' : '';  ?>
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="many_answers" {{$checked}} >  Cho phép chọn nhiều option</div>            
+
           </form>
           <div id="js-options-form-wrapper">
             <h3 class="mgb-20px" id="js-options-id">Options:</h3>

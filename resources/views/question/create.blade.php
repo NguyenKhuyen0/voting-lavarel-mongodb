@@ -51,7 +51,9 @@
             </div>
             
             <input type="hidden" name="ids" id="js-ids" />
-            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>            
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" value="true" checked>  Active</div>    
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="many_answers" value="true" checked>  Cho phép chọn nhiều option</div>            
+
           </form>
           <div class="d-none" id="js-options-form-wrapper">
             <h3 class="mgb-20px" id="js-options-id">Options:</h3>
