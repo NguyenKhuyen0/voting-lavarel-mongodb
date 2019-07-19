@@ -42,7 +42,7 @@ class QuestionController extends Controller
         $question= new Question();
         $question->question = $request->get('question');
         $question->active = (Boolean) $request->get('active');
-        $question->active = (Boolean) $request->get('many_answers');
+        $question->many_answers = (Boolean) $request->get('many_answers');
 
         $options = [];
         if($request->get('ids'))
@@ -104,7 +104,7 @@ class QuestionController extends Controller
         $question= Question::find($id);
         $question->question = $request->get('question');
         $question->active = (Boolean) $request->get('active');
-        $question->active = (Boolean) $request->get('many_answers');
+        $question->many_answers = (Boolean) $request->get('many_answers');
      
         $options = [];
         if($request->get('ids'))
@@ -182,14 +182,5 @@ class QuestionController extends Controller
         //     return '11111';
         // }
     }
-    public function api_get_question($id)
-    {
-        $question = Question::find($id);
-        $options =  Option::where('question_id', 'LIKE', $question->id.'%')->get();
-        if($options)
-        {
-            $question->options = $options;
-        }
-        return json_encode($question);
-    }
+
 }

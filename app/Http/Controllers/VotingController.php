@@ -205,24 +205,5 @@ class VotingController extends Controller
         //     return '11111';
         // }
     }
-    public function api_get_voting($id)
-    {
-        $voting = Voting::find($id);
-        $temp_questions =  Question::where('voting_id', 'LIKE', $voting->id.'%')->get();
-        $questions = [];
-        if($temp_questions)
-        {
-            foreach ($temp_questions as $key => $question) {
-               
-                $options =  Option::where('question_id', 'LIKE', $question->id.'%')->get();
-                if($options)
-                {
-                    $question->options = $options;
-                }
-                $questions []= $question;
-            }
-        }
-        $voting->questions = $questions;
-        return json_encode($questions);
-    }
+
 }

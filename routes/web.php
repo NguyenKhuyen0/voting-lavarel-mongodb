@@ -64,6 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('voting/{id}','VotingController@destroy');
     Route::get('voting/search','VotingController@search');
 
+    Route::get('voting/get/{id}','VotingController@api_get_voting');
+
     // Route::get('api/v1/voting/add','VotingController@apicreate');
     // Route::post('api/v1/voting/add','VotingController@apistore');
     // Route::get('api/v1/voting','VotingController@apiindex');

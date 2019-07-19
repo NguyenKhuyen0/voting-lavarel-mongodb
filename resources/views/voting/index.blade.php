@@ -23,7 +23,7 @@ use App\question;
     <table class="table table-striped">
     <thead>
       <tr>
-        <!-- <th>ID</th> -->
+        <th>ID</th>
         <th>Voting</th>
         <th>Questions</th>
         <th>Image</th>
@@ -38,7 +38,7 @@ use App\question;
       
       @foreach($votings as $voting)
       <tr>
-        <!-- <td>{{$voting->id}}</td> -->
+        <td>{{$voting->id}}</td>
         <td>{{$voting->title}}</td>
 
 
