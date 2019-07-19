@@ -17,8 +17,9 @@ class APIVote extends Controller
         // echo 111;
         $options = $request->get('options');
         $voting_id = $request->get('voting_id');
-        $voting = Option::find($voting_id);
+        $voting = Voting::find($voting_id);
         $active = $voting->active;
+        $time = time();
         $start_time = strtotime($voting->start_time);
         $end_time = strtotime($voting->end_time);
 
@@ -32,7 +33,7 @@ class APIVote extends Controller
                 if($this->vote($option_id, $user_id)) $voted = true;
             }
             // return false: User đã vote option này rồi
-            return !$voted ?  ['maso' => $this->getMaSo($voting_id, $user_id)] : false;
+            return !$voted ?  ['maso' => $this->getMaSo($voting_id, $user_id)] : 0;
         }
         return 0;
     }
@@ -40,6 +41,7 @@ class APIVote extends Controller
     {
         $option = Option::find($option_id);
         $voted_users =  $option->voted_users;
+        
         if( (is_array($voted_users) && !in_array( $user_id ,$voted_users)) || empty($voted_users))
         {
             $option->voted_users =  $voted_users ? (array_push($voted_users, $user_id)) : [$user_id];
@@ -120,7 +122,7 @@ class APIVote extends Controller
                 }
             }
             $voting->questions = $questions;
-            return json_encode($questions);
+            return json_encode($voting);
         }
         return 0;
     }

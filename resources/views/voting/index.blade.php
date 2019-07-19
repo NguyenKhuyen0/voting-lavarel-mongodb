@@ -30,7 +30,7 @@ use App\question;
         <th>Active</th>
         <th>Start Time</th>
         <th>End Time</th>
-        <th>Active</th>
+        
 
       </tr>
     </thead>
