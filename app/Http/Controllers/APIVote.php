@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class APIVote extends Controller
 {
-    private $message = [];
-    private $cho_phep_user_vote_nhieu_lan = false;
+    private $message;
+    private $cho_phep_user_vote_nhieu_lan = true;
 
     public function index()
     {
@@ -42,7 +42,7 @@ class APIVote extends Controller
             // return false: User đã vote option này rồi
             if($not_voted)
             {
-                $this->message []= 'vote khong thanh cong';
+                $this->message['fail']= true;
                 return $this->echo_log($this->message);
             }
             else 
@@ -50,7 +50,7 @@ class APIVote extends Controller
                 return $this->echo_log(['maso' => $this->getMaSo($voting_id, $user_id)]);
             }
         }
-        $this->message []= 'timeout or vote is not active';
+        $this->message['timeout']= true;
         return  $this->echo_log($this->message);
     }
     private function vote_thanh_cong($option_id, $user_id)
@@ -58,23 +58,22 @@ class APIVote extends Controller
         $option = Option::find($option_id);
         $voted_users =  $option->voted_users;
         
-        if( $this->cho_phep_user_vote_nhieu_lan || $this->chua_vote($voted_users, $user_id))
+        if( $this->cho_phep_user_vote_nhieu_lan || $this->chua_vote_option($voted_users, $user_id))
         {
 
             $option->voted_users =  empty($voted_users) ? (array_push($voted_users, $user_id)) : [$user_id];
             $option->votes = empty($option->votes) ?  1 : (int) $option->votes + 1;
             $option->save();
-            $this->message []= "user vote option $option_id thành công";
             return true;
         }
         else 
         {
-            $this->message []= 'user da vote option nay roi';
+            $this->message['da_binh_chon']= true;
             return false;
         }
         
     }
-    private function chua_vote($voted_users, $user_id)
+    private function chua_vote_option($voted_users, $user_id)
     {
         return (is_array($voted_users) && !in_array( $user_id ,$voted_users)) || empty($voted_users);
     }
@@ -87,34 +86,36 @@ class APIVote extends Controller
         if($current_voting)
         {
             $voted_users = $current_voting->voted_users;
-            $voted_users = $this->update_voted_users($voted_users, $user_id, $current_maso);
+            if($this->chua_vote_voting($voted_users, $user_id))
+            {
+
+                $voted_users = $this->update_voted_users($voted_users, $user_id, $current_maso);
+                $current_voting['voted_users'] = $voted_users;
+                $current_voting->save();
+            }
+            else
+            {
+                $array = array_column($voted_users, 'user_id');
+                $key = array_search($user_id,  $array);
+                $current_maso = $voted_users[$key]['maso'];
+            }
         }
 
-        $current_voting['voted_users'] = $voted_users;
-        $current_voting->save();
 
         return $current_maso;
     }
+    private function chua_vote_voting($voted_users, $user_id)
+    {
+        return empty($voted_users) || !in_array($user_id, array_column($voted_users, 'user_id'));
+    }
     private function update_voted_users($voted_users, $user_id, $current_maso)
     {
-        if(empty($voted_users))
-        {
-            $voted_users []= [
-                'user_id' => $user_id,
-                'maso' => $current_maso,
-              ];
-        }
-        else
-        {
-            // một user chỉ có một mã số  vote duy nhất
-            if(!in_array($user_id, array_column($voted_users, 'user_id')))
-            {
-                $voted_users []= [
-                    'user_id' => $user_id,
-                    'maso' => $current_maso,
-                  ];
-            }
-        }
+
+        $voted_users []= [
+            'user_id' => $user_id,
+            'maso' => $current_maso,
+            ];
+    
         return $voted_users;
     }
     public function get_voting($id)
