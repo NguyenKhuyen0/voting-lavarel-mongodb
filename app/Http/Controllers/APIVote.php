@@ -61,7 +61,15 @@ class APIVote extends Controller
         if( $this->cho_phep_user_vote_nhieu_lan || $this->chua_vote_option($voted_users, $user_id))
         {
 
-            $option->voted_users =  empty($voted_users) ? (array_push($voted_users, $user_id)) : [$user_id];
+            if(!empty($voted_users))
+            {
+                array_push($voted_users, $user_id);
+                $option->voted_users = $voted_users;
+            }
+            else
+            {
+                $option->voted_users = [$user_id];
+            }
             $option->votes = empty($option->votes) ?  1 : (int) $option->votes + 1;
             $option->save();
             return true;
@@ -120,6 +128,7 @@ class APIVote extends Controller
     }
     public function get_voting($id)
     {
+
         $voting = Voting::find($id);
         $active = $voting->active;
         $time = time();

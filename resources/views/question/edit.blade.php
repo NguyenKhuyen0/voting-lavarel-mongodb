@@ -44,6 +44,8 @@
                 <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
                 <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div> -->
             </div>
+
+            <div class="form-group" style="  margin-top: 20px;"><input type="checkbox" name="active" checked >  Active</div>
             <div class="form-group" style="  margin-top: 20px;"><input type="text" name="votes" placeholder="Số lượt votes" class="form-control" /></div>
             <div class="form-group"><button class="btn btn-primary" type="submit">Add</button></div>
           </form>

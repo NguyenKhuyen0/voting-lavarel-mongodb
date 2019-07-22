@@ -15,10 +15,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['middleware' => 'auth'], function () {
-        
+Route::group(['middleware' => 'custom_auth'], function () {
+    
     Route::get('/', function () {
-        return redirect('voting');;
+        return redirect('voting');
     });
 
     Route::get('admin', function () {

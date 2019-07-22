@@ -123,6 +123,8 @@ class OptionController extends Controller
  
         // ]);
 
+        // echo json_encode($request);  
+        // die();
         if($request->hasfile('gallery'))
         {
             foreach($request->file('gallery') as $img)
@@ -136,13 +138,14 @@ class OptionController extends Controller
 
         if($request->hasfile('image'))
         {
+
             $img = $request->file('image');
             $name = $img->getClientOriginalName();
             $img->move(public_path().'/images/', $name);  
             $image = $name;  
         }
+  
      
-
         $option= Option::find($id);
         $option->title = $request->get('title');
         $option->content = $request->get('content');
@@ -211,7 +214,8 @@ class OptionController extends Controller
         $option->content = $request->get('content');
         $option->image = $image;
         $option->gallery =  $gallery;
-        $option->votes = $request->get('votes');       
+        $option->votes = $request->get('votes');    
+        $option->active = (boolean)$request->get('active');    
         $option->save();
     
         echo json_encode($option);

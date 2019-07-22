@@ -181,6 +181,7 @@ $(document).ready(function () {
         '                <img src="/images/'+ option.image+'" width="50px"></td>'+
         '            <td>'+imgs_string+'</td>'+
         '            <td>'+ option.votes +'</td>'+
+        '            <td>'+ option.active +'</td>'+
         '            <td>'+
         '                <a href="/option/edit/'+option._id+'" class="btn btn-warning">Edit</a>'+
         '            </td>'+

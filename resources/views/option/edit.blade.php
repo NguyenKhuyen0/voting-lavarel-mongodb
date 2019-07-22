@@ -17,7 +17,7 @@
   </head>
   <body> -->
       <div class="contact-clean" style="width: 100%;">
-      <form method="post" action="{{action('OptionController@update', $id)}}">
+      <form method="post" action="{{action('OptionController@update', $id)}}" enctype="multipart/form-data">
         @csrf
           <h2 class="text-center">EDIT Option</h2>
           <div class="form-group"><input type="text" name="title" placeholder="Title" class="form-control" value="{{$option->title}}" /></div>
@@ -28,7 +28,7 @@
             <div class="col" id="js-file-wrapper"><img src="{{url('/images/'.$option->image)}}" width="100px" /></div>
           @endif
           </div>
-          <div class="form-group"><label class="d-block" for="gallery" style="margin-top: 20px;font-size: 18px;">Gallery</label><input type="file" name="gallery" multiple /></div>
+          <div class="form-group"><label class="d-block" for="gallery" style="margin-top: 20px;font-size: 18px;">Gallery</label><input type="file" name="gallery[]" multiple /></div>
           <div class="form-row" id="js-gallery-wrapper">
               <!-- <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
               <div class="col js-file-wrapper" style="padding: 5px;"><img src="https://via.placeholder.com/100" /></div>
