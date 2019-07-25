@@ -201,8 +201,4 @@ $(document).ready(function () {
     $('button[type="submit"][for="add_question_form"]').click(function(e){
         $('#add_question_form').submit();
     })
-
-
-
-
 })
