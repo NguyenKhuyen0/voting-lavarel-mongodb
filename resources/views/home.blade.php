@@ -9,53 +9,68 @@
         clientId: 'voting-dev',
         
     });
-    window.token = '';
-    window.userID = '';
-
+    var customKeyCloak = {};
     window.addEventListener('DOMContentLoaded', (event) => {
-
 
         window.keycloak.init({onLoad: 'check-sso'}).success(function(authenticated) {
             if(authenticated)
             {
-                // Đã login rồi.
+                customKeyCloak = createCustomKeyCloak(keycloak);
+                document.getElementById("iframe-voting").onload = function(){
+                    sendMessage(customKeyCloak);
+                };
             }
-            console.log(authenticated);
+            console.log('Bước 1');
         }).error(function() {
             alert('failed to initialize');
         });  
-        
-        
     });
 
-    window.keycloak.onAuthSuccess = function() {
-        window.token = keycloak.token;
-        window.userID = keycloak.subject;
-        window.addEventListener('load', (event) => {
-            window.iframeWin = document.getElementById("iframe-voting").contentWindow;
-            iframeWin.postMessage({"token" : token, 'userID' : userID}, "*");
-        })
-    }
+    window.addEventListener('message', function(e) {
+        if (e.origin == 'http://idesign.local' && e.data.msg =='login') {
+            
+            logIn();
+        } 
+        if (e.origin == 'http://idesign.local' && e.data.msg =='logout') {
+            
+            logOut();
+        } 
+    }, false);
 
-    function login()
+    function logIn()
     {
         keycloak.login();
-      
-
-            
-   
+    }
+    function logOut()
+    {
+        keycloak.logout();
     }
     
 
+    function sendMessage(data)
+    {
+        console.log('parent send message', data );
+        var iframeWin = document.getElementById("iframe-voting").contentWindow;
+        console.log(iframeWin);
+        iframeWin.postMessage(data, "*");
+    }
+    function createCustomKeyCloak(keycloak)
+    {
+        var customKeyCloak = {};
+        customKeyCloak.flow = keycloak.flow;
+        customKeyCloak.subject = keycloak.subject;
+        customKeyCloak.token = keycloak.token;
+        customKeyCloak.tokenParsed = keycloak.tokenParsed;
+        customKeyCloak.refreshToken = keycloak.refreshToken ;
+        customKeyCloak.timeSkew = keycloak.timeSkew;
+        customKeyCloak.authenticated = keycloak.authenticated;
+        return customKeyCloak;
+    }
 
-    window.addEventListener('message', function(e) {
-        // console.log(e.data.msg);
-        // console.log(e.origin);
-        if (e.origin == 'http://idesign.local') {
-            console.log('Login di ban');
-            login();
-        } 
-    }, false);
+
+
+
+
 </script>
 </head>
 <body>
